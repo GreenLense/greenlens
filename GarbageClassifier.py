@@ -21,7 +21,7 @@ dataset = ImageFolder(data_dir, transform = transformations)
 import matplotlib.pyplot as plt
 
 def show_sample(img, label):
-    print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
+    # print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
     plt.imshow(img.permute(1, 2, 0))
 
 img, label = dataset[12]
@@ -169,18 +169,25 @@ def predict_image(img, model):
     # Pick index with highest probability
     prob, preds  = torch.max(yb, dim=1)
     # Retrieve the class label
-    print(dataset)
+    # print(dataset)
     return dataset.classes[preds[0].item()]
 
-img, label = test_ds[17]
-print(plt.imshow(img.permute(1, 2, 0)))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+print("*******************************")
 
-img, label = test_ds[23]
-plt.imshow(img.permute(1, 2, 0))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+loaded_model = model
 
-img, label = test_ds[51]
-plt.imshow(img.permute(1, 2, 0))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+from PIL import Image
+from pathlib import Path
 
+def predict_external_image(image_name):
+    image = Image.open(Path('./' + image_name))
+
+    example_image = transformations(image)
+    # plt.imshow(example_image.permute(1, 2, 0))
+    print("The image we are testing is " + image_name)
+    print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
+
+directory = './garbage-classification/testing/'
+for filename in os.listdir(directory):
+    f = os.path.join(directory, filename)
+    predict_external_image(f)
