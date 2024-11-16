@@ -187,7 +187,7 @@ def predict_external_image(image_name):
     print("The image we are testing is " + image_name)
     print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
 
-directory = './garbage-classification/testing/'
+directory = './testing/'
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
     predict_external_image(f)
