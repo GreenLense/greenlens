@@ -6,7 +6,7 @@ import torchvision.models as models
 import torch.nn as nn
 import torch.nn.functional as F
 def main():
-    data_dir  = './garbage-classification/Garbage-classification/Garbage-classification'
+    data_dir  = './garbage-classification/garbage-classification/Garbage-classification'
 
     classes = os.listdir(data_dir)
     print(classes)
@@ -34,7 +34,7 @@ def main():
     print(len(train_ds), len(val_ds), len(test_ds))
 
     from torch.utils.data.dataloader import DataLoader
-    batch_size = 32
+    batch_size = 64
 
     train_dl = DataLoader(train_ds, batch_size, shuffle = True, num_workers = 4, pin_memory = True)
     val_dl = DataLoader(val_ds, batch_size*2, num_workers = 4, pin_memory = True)
@@ -163,13 +163,14 @@ def main():
 
     print(evaluate(model, val_dl))
 
-    num_epochs = 8
+    num_epochs = 16
     opt_func = torch.optim.Adam
     lr = 5.5e-5
 
     path = 'garbage-classifier.pth'
     if not os.path.exists(path):
         history = fit(num_epochs, lr, model, train_dl, val_dl, opt_func)
+        torch.save(model.state_dict(), 'garbage-classifier.pth')
 
     def predict_image(img, model):
         # Convert to a batch of 1
@@ -181,10 +182,8 @@ def main():
         # Retrieve the class label
         # print(dataset)
         return dataset.classes[preds[0].item()]
-    
-    torch.save(model.state_dict(), 'garbage-classifier.pth')
 
-    loaded_model = ResNet()
+    loaded_model = to_device(ResNet(), device)
     loaded_model.load_state_dict(torch.load('garbage-classifier.pth', weights_only=True))
     loaded_model.eval()
 
@@ -200,7 +199,7 @@ def main():
         # plt.imshow(example_image.permute(1, 2, 0))
         print("The image we are testing is " + image_name)
         print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
-
+    predict_external_image('./testing/alan.jpg')
     directory = './testing/'
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
