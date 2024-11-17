@@ -1,5 +1,6 @@
 import os
 import torch
+from torch.cuda import is_available
 from torch.utils.data import random_split
 import torchvision.models as models
 import torch.nn as nn
@@ -88,7 +89,10 @@ def main(fileName):
         return dataset.classes[preds[0].item()]
 
     loaded_model = to_device(ResNet(), device)
-    loaded_model.load_state_dict(torch.load('garbage-classifier.pth', weights_only=True))
+    if torch.cuda.is_available():
+        loaded_model.load_state_dict(torch.load('garbage-classifier.pth', weights_only=True))
+    else:
+        loaded_model.load_state_dict(torch.load('garbage-classifier.pth', map_location='cpu', weights_only=True))
     loaded_model.eval()
 
     def predict_external_image(image_name):
