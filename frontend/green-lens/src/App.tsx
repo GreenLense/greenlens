@@ -26,13 +26,40 @@ function App() {
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.15, delay: 1.75, ease: "easeInOut" }}
+        transition={{ duration: 0.75 , delay: 1.5, ease: "easeInOut" }}
       >
         <Button onClick={handleClick} className='m-8 bg-white text-green-500 border border-green-500 hover:bg-green-200 focus:outline-none focus:ring-0 hover:border-green-500'>Get Started</Button>
-        <Graphic />
-        <Statement />
-        <ImageProvider ref={targetRef} />
+      </motion.div>
 
+      <motion.div
+        className="my-component"
+        initial={{ opacity: 0, x: "-10vw" }} 
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: true }}
+        transition={{ duration: 0.75 , delay:0.25, ease: "circOut" }} 
+      >
+        <Graphic />
+
+      </motion.div>
+
+      <motion.div
+        className="my-component"
+        initial={{ opacity: 0, x: "10vw" }} // Start off-screen to the right
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: true }}
+        transition={{ duration: 0.75 , delay: 0.25, ease: "circOut" }} 
+      >
+        <Statement />
+      </motion.div>
+
+      <motion.div
+        className="my-component"
+        initial={{ opacity: 0, x: "-10vw" }} 
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: true }}
+        transition={{ duration: 0.75 , delay: 0.25, ease: "circOut" }} 
+      >
+        <ImageProvider ref={targetRef} />
       </motion.div>
       
     </div>
