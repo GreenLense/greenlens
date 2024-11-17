@@ -23,7 +23,6 @@ def main():
     def show_sample(img, label):
         print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
         plt.imshow(img.permute(1, 2, 0))
-        plt.show()
 
     img, label = dataset[12]
     show_sample(img, label)
@@ -35,7 +34,7 @@ def main():
     print(len(train_ds), len(val_ds), len(test_ds))
 
     from torch.utils.data.dataloader import DataLoader
-    batch_size = 64
+    batch_size = 32
 
     train_dl = DataLoader(train_ds, batch_size, shuffle = True, num_workers = 4, pin_memory = True)
     val_dl = DataLoader(val_ds, batch_size*2, num_workers = 4, pin_memory = True)
@@ -164,7 +163,7 @@ def main():
 
     print(evaluate(model, val_dl))
 
-    num_epochs = 16
+    num_epochs = 8
     opt_func = torch.optim.Adam
     lr = 5.5e-5
 
