@@ -1,8 +1,6 @@
 import { Button } from "./button";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 
-import exampleOutput from "../../assets/example-output.png"
-
 import { forwardRef, useRef, useState } from "react"
 
 const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>((props, ref) => {
@@ -13,6 +11,38 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
         fileInputRef.current?.click()
     }
 
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          const url = URL.createObjectURL(file);
+          setImageUrl(url); // Display the image preview
+
+          console.log(file)
+    
+          // Create a FormData instance to send the file
+          const formData = new FormData();
+          formData.append('file', file);
+
+          console.log(formData)
+    
+          try {
+            const response = await fetch('http://localhost:5001/upload', { // Ensure the URL points to the correct backend
+              method: 'POST',
+              body: formData,
+            });
+    
+            if (!response.ok) {
+              throw new Error('File upload failed');
+            }
+    
+            const data = await response.json();
+            console.log('File uploaded successfully:', data);
+          } catch (error) {
+            console.error('Error uploading file:', error);
+          }
+        }
+      };
+
     return (
         <div ref={ref} {...props} className="mb-4">
             <Button onClick={handleClick} className='m-8 bg-white text-green-500 border border-green-500 hover:bg-green-200 focus:outline-none focus:ring-0 hover:border-green-500'>Upload</Button>
@@ -20,13 +50,7 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
                 ref={fileInputRef}
                 type="file"
                 className="hidden"
-                onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                        const url = URL.createObjectURL(file);
-                        setImageUrl(url); 
-                    }
-                }}
+                onChange={handleFileUpload}
             />
 
             {imageUrl && (
