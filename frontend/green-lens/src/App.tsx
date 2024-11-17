@@ -7,17 +7,25 @@ import { Button } from './components/ui/button'
 import Graphic from './components/ui/graphic'
 import Statement from './components/ui/statement'
 import ImageProvider from './components/ui/image-provider'
-import Footer from './components/ui/footer'
+import { useRef } from 'react'
 
 function App() {
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClick = () => {
+    // Scroll to the target component
+    if (targetRef.current) {
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div>
       <Hero />
-      <Button className='m-4'>Get Started</Button>
+      <Button onClick={handleClick} className='m-8 bg-white text-green-500 border border-green-500 hover:bg-green-200 focus:outline-none focus:ring-0 hover:border-green-500'>Get Started</Button>
       <Graphic />
       <Statement />
-      <ImageProvider />
-      <Footer />
+      <ImageProvider ref={targetRef}/>
     </div>
   )
 }
