@@ -92,10 +92,10 @@ export default function Hero() {
 
             <motion.div
                 animate={{
-                    x: ["-20vw", "100vw"],
+                    x: ["-17vw", "100vw"],
                 }}
                 transition={{
-                    duration: 50, 
+                    duration: 60, 
                     repeat: Infinity, 
                     ease: "linear", 
                 }}
