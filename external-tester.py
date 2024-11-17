@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from torch.utils.data.dataloader import DataLoader
 from torchvision.utils import make_grid
 from torchvision.datasets import ImageFolder
-import torchvision.transforms as transforms
+import torchvision.transforms.v2 as transformsv2
 import matplotlib.pyplot as plt
 from PIL import Image
 from pathlib import Path
@@ -19,7 +19,7 @@ def main(fileName):
     warnings.filterwarnings("ignore")
     data_dir  = './garbage-classification/garbage-classification/Garbage-classification'
 
-    transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
+    transformations = transformsv2.Compose([transformsv2.Resize((256, 256)), transformsv2.ToTensor()])
 
     dataset = ImageFolder(data_dir, transform = transformations)
 
@@ -96,9 +96,9 @@ def main(fileName):
     loaded_model.eval()
 
     def predict_external_image(image_name):
-        image = Image.open(Path('./' + image_name))
+        image = Image.open(Path('./' + image_name)).convert('RGB')
 
-        transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
+        transformations = transformsv2.Compose([transformsv2.Resize((256, 256)), transformsv2.ToTensor()])
 
         example_image = transformations(image)
         plt.imshow(example_image.permute(1, 2, 0))
@@ -107,7 +107,7 @@ def main(fileName):
     # predict image given
     # predict_external_image('./user-inputs/' + fileName)
     predict_external_image(fileName)
-    os.remove(fileName)
+    # os.remove(fileName)
         
 if __name__ == "__main__":
     main(sys.argv[1])
