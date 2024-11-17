@@ -1,6 +1,5 @@
 import os
 import torch
-import torchvision
 from torch.utils.data import random_split
 import torchvision.models as models
 import torch.nn as nn
@@ -12,11 +11,10 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 from PIL import Image
 from pathlib import Path
+import sys
 
-def main():
+def main(fileName):
     data_dir  = './garbage-classification/garbage-classification/Garbage-classification'
-    
-    classes = os.listdir(data_dir)
 
     transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
 
@@ -101,10 +99,8 @@ def main():
         print("The image we are testing is " + image_name)
         print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
     
-    directory = './testing/'
-    for filename in os.listdir(directory):
-        f = os.path.join(directory, filename)
-        predict_external_image(f)
+    # predict image given
+    predict_external_image('./testing/' + fileName)
         
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])
