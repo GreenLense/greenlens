@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div style={{ backgroundColor: '#19B84B', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#19B84B', minHeight: '100vh' }} className="overflow-hidden">
       <Hero />
       <motion.div
         initial={{ y: 50, opacity: 0 }}

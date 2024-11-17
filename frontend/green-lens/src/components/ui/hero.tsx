@@ -13,7 +13,7 @@ import {motion} from 'framer-motion';
 
 export default function Hero() {
     return (
-        <div className="relative overflow-hidden">
+        <div className="relative">
             <img src={background} alt="Background" className="w-screen" />
             <motion.div
                 initial={{ y: 100, opacity: 0 }}

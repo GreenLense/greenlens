@@ -47,7 +47,7 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
       };
 
     return (
-        <div ref={ref} {...props} className="mb-4">
+        <div ref={ref} {...props} className="mb-12">
             <Button onClick={handleClick} className='m-8 bg-white text-green-500 border border-green-500 hover:bg-green-200 focus:outline-none focus:ring-0 hover:border-green-500'>Upload</Button>
             <input
                 ref={fileInputRef}
@@ -76,7 +76,7 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
                 }
                 {
                     !result && <CardContent>
-                        Waiting...
+                        Waiting for upload...
                     </CardContent>
                 }
             </Card>
