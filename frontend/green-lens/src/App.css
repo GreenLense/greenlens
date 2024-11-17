@@ -2,3 +2,10 @@
   margin: 0 auto;
   text-align: center;
 }
+* {
+  cursor: url('./assets/cursors/Cursor_main.png'), auto;
+}
+
+button:hover, a:hover {
+  cursor: url('./assets/cursors/Cursor_hover.png'), auto; 
+}
