@@ -12,8 +12,10 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from pathlib import Path
 import sys
+import warnings
 
 def main(fileName):
+    warnings.filterwarnings("ignore")
     data_dir  = './garbage-classification/garbage-classification/Garbage-classification'
 
     transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
@@ -96,8 +98,7 @@ def main(fileName):
 
         example_image = transformations(image)
         plt.imshow(example_image.permute(1, 2, 0))
-        print("The image we are testing is " + image_name)
-        print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
+        print(predict_image(example_image, loaded_model))
     
     # predict image given
     predict_external_image('./testing/' + fileName)
