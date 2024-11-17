@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 def main():
     data_dir  = './garbage-classification/garbage-classification/Garbage-classification'
-
+    
     classes = os.listdir(data_dir)
     print(classes)
 
@@ -21,8 +21,9 @@ def main():
     import matplotlib.pyplot as plt
 
     def show_sample(img, label):
-        # print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
+        print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
         plt.imshow(img.permute(1, 2, 0))
+        plt.show()
 
     img, label = dataset[12]
     show_sample(img, label)
@@ -30,7 +31,7 @@ def main():
     random_seed = 42
     torch.manual_seed(random_seed)
 
-    train_ds, val_ds, test_ds = random_split(dataset, [1593, 176, 758])
+    train_ds, val_ds, test_ds = random_split(dataset, [10166, 635, 1906])
     print(len(train_ds), len(val_ds), len(test_ds))
 
     from torch.utils.data.dataloader import DataLoader
@@ -196,7 +197,7 @@ def main():
         transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
 
         example_image = transformations(image)
-        # plt.imshow(example_image.permute(1, 2, 0))
+        plt.imshow(example_image.permute(1, 2, 0))
         print("The image we are testing is " + image_name)
         print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
     predict_external_image('./testing/alan.jpg')
