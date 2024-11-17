@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#19B84B', minHeight: '100vh' }}>
       <Hero />
       <Button onClick={handleClick} className='m-8 bg-white text-green-500 border border-green-500 hover:bg-green-200 focus:outline-none focus:ring-0 hover:border-green-500'>Get Started</Button>
       <Graphic />
