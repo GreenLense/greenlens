@@ -107,6 +107,7 @@ def main(fileName):
     # predict image given
     # predict_external_image('./user-inputs/' + fileName)
     predict_external_image(fileName)
+    os.remove(fileName)
         
 if __name__ == "__main__":
     main(sys.argv[1])
