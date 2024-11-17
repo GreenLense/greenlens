@@ -42,8 +42,10 @@ export default function Graphic() {
 
     return (
         <div>
-            <iframe id="iframe" title='Tonnes of waste dumped' src='https://www.theworldcounts.com/embeds/counters/104?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14' className="border-none h-24 w-96 m-auto text-3xl"></iframe>
-            <Card className="m-auto w-7/12">
+            <Card className="w-8/12 m-auto">
+                <iframe id="iframe" title='Tonnes of waste dumped' src='https://www.theworldcounts.com/embeds/counters/104?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14' className="border-none h-24 w-96 m-auto text-3xl"></iframe>
+            </Card>
+            <Card className="mt-8  mx-auto w-7/12">
                 <CardHeader>
                     <CardTitle>MSW (Municipal Solid Waste) Generation vs. Recycling Rates</CardTitle>
                     <CardDescription>(million tons)</CardDescription>

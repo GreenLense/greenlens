@@ -6,6 +6,7 @@ import { forwardRef, useRef, useState } from "react"
 const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>((props, ref) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null)
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [result, setResult] = useState<string | null>(null);
 
     const handleClick = () => {
         fileInputRef.current?.click()
@@ -37,6 +38,8 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
     
             const data = await response.json();
             console.log('File uploaded successfully:', data);
+            console.log("Response from backend: ", data.message)
+            setResult(data.message)
           } catch (error) {
             console.error('Error uploading file:', error);
           }
@@ -54,18 +57,28 @@ const ImageProvider = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<
             />
 
             {imageUrl && (
-                <div className="mt-4">
-                    <img src={imageUrl} alt="Uploaded" className="max-w-full h-72 mb-6 mx-auto" />
-                </div>
+                <Card className="mx-auto w-4/12 mb-4">
+                    <div className="mt-4">
+                        <img src={imageUrl} alt="Uploaded" className="max-w-full h-72 mb-6 mx-auto" />
+                    </div>      
+                </Card>
             )}
 
-            <Card className="m-auto w-6/12">
+            <Card className="mx-auto w-6/12">
                 <CardHeader>
                     <CardTitle>Analysis</CardTitle>
                 </CardHeader>
-                <CardContent>
-                    The object in your image is plastic!
-                </CardContent>
+                {
+                    result && <CardContent>
+                        The object in your image is {result}!
+                    </CardContent>
+ 
+                }
+                {
+                    !result && <CardContent>
+                        Waiting...
+                    </CardContent>
+                }
             </Card>
         </div>
     )

@@ -105,7 +105,8 @@ def main(fileName):
         print(predict_image(example_image, loaded_model))
     
     # predict image given
-    predict_external_image('./user-inputs/' + fileName)
+    # predict_external_image('./user-inputs/' + fileName)
+    predict_external_image(fileName)
         
 if __name__ == "__main__":
     main(sys.argv[1])
