@@ -21,7 +21,7 @@ dataset = ImageFolder(data_dir, transform = transformations)
 import matplotlib.pyplot as plt
 
 def show_sample(img, label):
-    print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
+    # print("Label:", dataset.classes[label], "(Class No: "+ str(label) + ")")
     plt.imshow(img.permute(1, 2, 0))
 
 img, label = dataset[12]
@@ -134,13 +134,18 @@ def evaluate(model, val_loader):
     return model.validation_epoch_end(outputs)
 
 def fit(epochs, lr, model, train_loader, val_loader, opt_func=torch.optim.SGD):
+    print("Running Fit")
     history = []
     optimizer = opt_func(model.parameters(), lr)
     for epoch in range(epochs):
+        print("Running epoch ", epoch)
         # Training Phase 
         model.train()
         train_losses = []
+        b = 0
         for batch in train_loader:
+            print("Running batch ", b, "In epoch ", epoch)
+            b += 1
             loss = model.training_step(batch)
             train_losses.append(loss)
             loss.backward()
@@ -151,15 +156,18 @@ def fit(epochs, lr, model, train_loader, val_loader, opt_func=torch.optim.SGD):
         result['train_loss'] = torch.stack(train_losses).mean().item()
         model.epoch_end(epoch, result)
         history.append(result)
+        print(result)
     return history
 
 model = to_device(ResNet(), device)
 
-evaluate(model, val_dl)
+print(evaluate(model, val_dl))
 
 num_epochs = 8
 opt_func = torch.optim.Adam
-lr = 5.5e-5
+lr = 0.0001 #5.5e-5
+
+history = fit(num_epochs, lr, model, train_dl, val_dl, opt_func)
 
 def predict_image(img, model):
     # Convert to a batch of 1
@@ -169,18 +177,25 @@ def predict_image(img, model):
     # Pick index with highest probability
     prob, preds  = torch.max(yb, dim=1)
     # Retrieve the class label
-    print(dataset)
+    # print(dataset)
     return dataset.classes[preds[0].item()]
 
-img, label = test_ds[17]
-print(plt.imshow(img.permute(1, 2, 0)))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+print("*******************************")
 
-img, label = test_ds[23]
-plt.imshow(img.permute(1, 2, 0))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+loaded_model = model
 
-img, label = test_ds[51]
-plt.imshow(img.permute(1, 2, 0))
-print('Label:', dataset.classes[label], ', Predicted:', predict_image(img, model))
+from PIL import Image
+from pathlib import Path
 
+def predict_external_image(image_name):
+    image = Image.open(Path('./' + image_name))
+
+    example_image = transformations(image)
+    # plt.imshow(example_image.permute(1, 2, 0))
+    print("The image we are testing is " + image_name)
+    print("The image resembles", predict_image(example_image, loaded_model) + ".\n")
+
+directory = './testing/'
+for filename in os.listdir(directory):
+    f = os.path.join(directory, filename)
+    predict_external_image(f)
