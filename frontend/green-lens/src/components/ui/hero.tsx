@@ -25,18 +25,18 @@ export default function Hero() {
             </motion.div>
 
             <motion.div
-                initial={{ x: -350 }}
+                initial={{ x: -450 }}
                 animate={{ x: 0}}
-                transition={{ duration: 0.75, delay: 0.5 , ease: "easeOut"}}
+                transition={{ duration: 1.25, delay: 0.25 , ease: "easeOut"}}
                 className="absolute top-0 left-0 z-20"
             >
                 <LeftHill />
             </motion.div>
 
             <motion.div
-                initial={{ x: 350, }}
+                initial={{ x: 450, }}
                 animate={{ x: 0,}}
-                transition={{ duration: 0.75, delay: 0.5, ease: "easeOut" }}
+                transition={{ duration: 1.25, delay: 0.25, ease: "easeOut" }}
                 className="absolute  top-0 left-0 z-20"
             >
                 <RightHill />
@@ -92,10 +92,10 @@ export default function Hero() {
 
             <motion.div
                 animate={{
-                    x: ["-20vw", "100vw"],
+                    x: ["-17vw", "100vw"],
                 }}
                 transition={{
-                    duration: 50, 
+                    duration: 60, 
                     repeat: Infinity, 
                     ease: "linear", 
                 }}
