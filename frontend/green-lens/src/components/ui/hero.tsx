@@ -16,9 +16,9 @@ export default function Hero() {
         <div className="relative">
             <img src={background} alt="Background" className="w-screen" />
             <motion.div
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.75, ease: "easeOut" }}
+                initial={{  opacity: 0 }}
+                animate={{  opacity: 1 }}
+                transition={{ duration: 1.0, ease: "easeOut" }}
                 className="absolute top-0 left-0 z-10"
             >
                 <Mountains />
