@@ -33,6 +33,16 @@ function App() {
 
       <motion.div
         className="my-component"
+        initial={{ opacity: 0, x: "10vw" }} // Start off-screen to the right
+        whileInView={{ opacity: 1, x: 0 }} 
+        viewport={{ once: true }}
+        transition={{ duration: 0.75 , delay: 0.25, ease: "circOut" }} 
+      >
+        <Statement />
+      </motion.div>
+
+      <motion.div
+        className="my-component"
         initial={{ opacity: 0, x: "-10vw" }} 
         whileInView={{ opacity: 1, x: 0 }} 
         viewport={{ once: true }}
@@ -40,16 +50,6 @@ function App() {
       >
         <Graphic />
 
-      </motion.div>
-
-      <motion.div
-        className="my-component"
-        initial={{ opacity: 0, x: "10vw" }} // Start off-screen to the right
-        whileInView={{ opacity: 1, x: 0 }} 
-        viewport={{ once: true }}
-        transition={{ duration: 0.75 , delay: 0.25, ease: "circOut" }} 
-      >
-        <Statement />
       </motion.div>
 
       <motion.div
